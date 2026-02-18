@@ -1,6 +1,11 @@
 from config import Config
 import google.generativeai as genai
 import os
+import warnings
+
+# Suppress specific deprecation warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # --- CONFIGURE KEYS HERE ---
 GEMINI_API_KEY = Config.GEMINI_API_KEY
@@ -22,13 +27,14 @@ class AIService:
             try:
                 # Direct API for Images (Legacy/backup)
                 genai.configure(api_key=GEMINI_API_KEY)
-                self.gemini_model = genai.GenerativeModel('gemini-flash-lite-latest')
+                self.gemini_model = genai.GenerativeModel('gemini-2.0-flash-lite')
                 
                 # LangChain Setup for Text (Memory)
                 self.llm = ChatGoogleGenerativeAI(
-                    model="gemini-flash-lite-latest", # Reverting to known working model
+                    model="gemini-2.0-flash-lite", 
                     google_api_key=GEMINI_API_KEY,
-                    temperature=0.7
+                    temperature=0.7,
+                    convert_system_message_to_human=True 
                 )
                 
                 # System Prompt Template

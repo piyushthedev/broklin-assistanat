@@ -61,6 +61,7 @@ pyasn1_modules==0.4.2
 PyAudio==0.2.14
 pycparser==3.0
 pydantic==2.12.5
+python-dotenv==1.0.1
 pydantic_core==2.41.5
 Pygments==2.19.2
 PyJWT==2.11.0
