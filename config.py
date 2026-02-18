@@ -4,7 +4,10 @@ class Config:
     """Base configuration."""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'gemini-assistant-secret-key'
     SESSION_TYPE = 'filesystem'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///database.db'
+    if os.environ.get('VERCEL_ENV'):
+        SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/database.db'
+    else:
+        SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///database.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Gemini API Key
